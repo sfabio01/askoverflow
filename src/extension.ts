@@ -7,12 +7,12 @@ export function activate(context: vscode.ExtensionContext) {
 	const sidebarProvider = new SidebarProvider(context.extensionUri);
 	context.subscriptions.push(
 		vscode.window.registerWebviewViewProvider(
-			"helloworld-sidebar",
+			"asktostackoverflow-sidebar",
 			sidebarProvider
 		)
 	);
 
-	context.subscriptions.push(vscode.commands.registerCommand('helloworld.insertCode', () => {
+	context.subscriptions.push(vscode.commands.registerCommand('asktostackoverflow.insertCode', () => {
 		let editor = vscode.window.activeTextEditor;
 
 		if (editor === undefined) {
@@ -27,9 +27,9 @@ export function activate(context: vscode.ExtensionContext) {
 		sidebarProvider._view?.webview.postMessage({ type: "selectedCode", value: text });
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('helloworld.refresh', async () => {
+	context.subscriptions.push(vscode.commands.registerCommand('asktostackoverflow.refresh', async () => {
 		await vscode.commands.executeCommand("workbench.action.closeSidebar");
-		await vscode.commands.executeCommand("workbench.view.extension.helloworld-sidebar-view");
+		await vscode.commands.executeCommand("workbench.view.extension.asktostackoverflow-sidebar-view");
 		setTimeout(() => { vscode.commands.executeCommand("workbench.action.webview.openDeveloperTools"); }, 100);
 
 	}));

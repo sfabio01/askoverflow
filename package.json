@@ -1,7 +1,7 @@
 {
-	"name": "helloworld",
-	"displayName": "HelloWorld",
-	"description": "My first VS Code extension",
+	"name": "asktostackoverflow",
+	"displayName": "Ask to Stackoverlow",
+	"description": "Ask questions to Stackoverflow directly from inside VS Code",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.60.0"
@@ -10,42 +10,41 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:helloworld.helloWorld",
-		"onCommand:helloworld.refresh",
-		"onCommand:helloworld.insertCode",
-		"onView:helloworld-sidebar"
+		"onCommand:asktostackoverflow.refresh",
+		"onCommand:asktostackoverflow.insertCode",
+		"onView:asktostackoverflow-sidebar"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"viewsContainers": {
 			"activitybar": [
 				{
-					"id": "helloworld-sidebar-view",
-					"title": "HelloWorld",
+					"id": "asktostackoverflow-sidebar-view",
+					"title": "Ask to Stackoverflow",
 					"icon": "media/icon.svg"
 				}
 			]
 		},
 		"views": {
-			"helloworld-sidebar-view": [
+			"asktostackoverflow-sidebar-view": [
 				{
 					"type": "webview",
-					"id": "helloworld-sidebar",
-					"name": "Hello World",
+					"id": "asktostackoverflow-sidebar",
+					"name": "Ask to Stackoverflow",
 					"icon": "media/icon.svg",
-					"contextualTitle": "HelloWorld"
+					"contextualTitle": "AskToStackoverflow"
 				}
 			]
 		},
 		"commands": [
 			{
-				"command": "helloworld.refresh",
-				"category": "HelloWorld",
+				"command": "asktostackoverflow.refresh",
+				"category": "AskToStackoverflow",
 				"title": "Refresh Webview"
 			},
 			{
-				"command": "helloworld.insertCode",
-				"category": "HelloWorld",
+				"command": "asktostackoverflow.insertCode",
+				"category": "AskToStackoverflow",
 				"title": "Insert code from current selection"
 			}
 		]
