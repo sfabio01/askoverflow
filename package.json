@@ -9,6 +9,10 @@
 	"categories": [
 		"Other"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sfabio01/asktostackoverflow-vscode-extension.git"
+	},
 	"activationEvents": [
 		"onCommand:asktostackoverflow.refresh",
 		"onCommand:asktostackoverflow.insertCode",
@@ -89,5 +93,10 @@
 		"vscode-test": "^1.5.2",
 		"webpack": "^5.38.1",
 		"webpack-cli": "^4.7.0"
-	}
+	},
+	"bugs": {
+		"url": "https://github.com/sfabio01/asktostackoverflow-vscode-extension/issues",
+		"email": "fabiosabbion.apps@gmail.com"
+	},
+	"homepage": "https://github.com/sfabio01/asktostackoverflow-vscode-extension/blob/main/README.md"
 }
