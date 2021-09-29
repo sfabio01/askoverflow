@@ -1,9 +1,16 @@
+import polka = require("polka");
 import * as vscode from "vscode";
+import { TokenManager } from './TokenManager';
+
+const apiBaseUrl = "https://xeyuug.deta.dev";
+// const apiBaseUrl = "http://localhost";
 
 
 export class SidebarProvider implements vscode.WebviewViewProvider {
     _view?: vscode.WebviewView;
     _doc?: vscode.TextDocument;
+
+
 
     constructor(private readonly _extensionUri: vscode.Uri) { }
 
@@ -19,19 +26,36 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 
         webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 
+        const app = polka();
+
+        app.get("/auth/:token", (req, res) => {
+            const token = req.params.token;
+            if (!token) {
+                res.end("auth fail");
+                return;
+            }
+            this._view?.webview.postMessage({ type: "token", value: token });
+            TokenManager.setToken(token);
+            res.end("auth success, you can close this window now");
+            app.server?.close();
+
+        });
+
         webviewView.webview.onDidReceiveMessage(async (data) => {
             switch (data.type) {
-                case "getText": {
-                    let editor = vscode.window.activeTextEditor;
-                    if (editor === undefined) {
-                        return;
-                    }
-                    let text = editor.document.getText();
-                    data.callback(text);
+                case "onAuth": {
+                    // const cachedToken = TokenManager.getToken();
+                    // if (cachedToken) {
+                    //     this._view?.webview.postMessage({ type: "token", value: cachedToken });
+                    // } else {
+                    app.listen(56789, () => {
+                        console.log("running polka on localhost:56789");
+                        vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(apiBaseUrl + "/auth"));
+                    });
+                    // }
 
                     break;
                 }
-
                 case "onInfo": {
                     if (!data.value) {
                         return;
@@ -48,6 +72,9 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
                 }
             }
         });
+
+
+
     }
 
     public revive(panel: vscode.WebviewView) {
@@ -88,8 +115,10 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
                 <script nonce="${nonce}">
                     const tsvscode = acquireVsCodeApi();
                 </script>
+
 			</head>
-      <body>
+            <body>
+                <script type='text/javascript' src='https://api.stackexchange.com/js/2.0/all.js' nonce="${nonce}"></script>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;

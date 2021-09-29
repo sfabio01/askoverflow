@@ -1,8 +1,10 @@
 import * as vscode from 'vscode';
 import { SidebarProvider } from './SidebarProvider';
+import { TokenManager } from './TokenManager';
 
 export function activate(context: vscode.ExtensionContext) {
 
+	TokenManager.initAsync(context);
 
 	const sidebarProvider = new SidebarProvider(context.extensionUri);
 	context.subscriptions.push(
@@ -33,6 +35,8 @@ export function activate(context: vscode.ExtensionContext) {
 		setTimeout(() => { vscode.commands.executeCommand("workbench.action.webview.openDeveloperTools"); }, 100);
 
 	}));
+
+
 
 
 }

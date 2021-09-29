@@ -20,8 +20,10 @@ export default fs
                 format: "iife",
                 name: "app",
                 file: "out/compiled/" + name + ".js",
+
             },
             plugins: [
+
                 svelte({
                     // enable run-time checks when not in production
                     dev: !production,
@@ -32,6 +34,7 @@ export default fs
                     },
                     preprocess: sveltePreprocess(),
                 }),
+
 
                 // If you have external dependencies installed from
                 // npm, you'll most likely need these plugins. In
@@ -60,6 +63,7 @@ export default fs
                 // If we're building for production (npm run build
                 // instead of npm run dev), minify
                 production && terser(),
+
             ],
             watch: {
                 clearScreen: false,
