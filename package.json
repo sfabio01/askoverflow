@@ -24,7 +24,7 @@
 			"activitybar": [
 				{
 					"id": "asktostackoverflow-sidebar-view",
-					"title": "Ask to Stackoverflow",
+					"title": "AskOverflow",
 					"icon": "media/icon.svg"
 				}
 			]
@@ -34,7 +34,7 @@
 				{
 					"type": "webview",
 					"id": "asktostackoverflow-sidebar",
-					"name": "Ask to Stackoverflow",
+					"name": "AskOverflow",
 					"icon": "media/icon.svg",
 					"contextualTitle": "AskToStackoverflow"
 				}
@@ -43,12 +43,12 @@
 		"commands": [
 			{
 				"command": "asktostackoverflow.refresh",
-				"category": "AskToStackoverflow",
+				"category": "AskOverflow",
 				"title": "Refresh Webview"
 			},
 			{
 				"command": "asktostackoverflow.insertCode",
-				"category": "AskToStackoverflow",
+				"category": "AskOverflow",
 				"title": "Insert code from current selection"
 			}
 		]

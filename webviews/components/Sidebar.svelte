@@ -77,7 +77,6 @@
     });
 </script>
 
-Token: {accessToken}
 <h1>Ask a question</h1>
 <label for="title"><b>Title</b></label>
 <input
