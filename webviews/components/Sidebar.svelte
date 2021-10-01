@@ -1,13 +1,16 @@
 <script lang="ts">
+    import { createHash } from "crypto";
+
     import { onMount } from "svelte";
 
+    const key = "BS00p5ATAfS7dMN3HrcL9A((";
     let accessToken = "";
 
     let title = "";
     let body = "";
     let tags = "";
 
-    function postQuestion() {
+    async function postQuestion() {
         if (accessToken == "") {
             tsvscode.postMessage({ type: "onAuth", value: "" });
             return;
@@ -26,36 +29,41 @@
             });
             return;
         }
-        fetch(
-            "https://api.stackexchange.com/docs/create-question#title=" +
-                title.replaceAll(" ", "%20") +
-                "&body=" +
-                body.replaceAll(" ", "%20") +
-                "&tags=" +
-                tags.replaceAll(" ", "%20") +
-                "&key=BS00p5ATAfS7dMN3HrcL9A((&preview=true&filter=default&site=stackoverflow&access_token=" +
-                accessToken,
-            {
-                method: "POST",
-                mode: "no-cors",
-            }
-        ).then(
-            async (res) => {
-                let json = await res.json();
-                console.log(json);
-                tsvscode.postMessage({
-                    type: "onInfo",
-                    value: "Question posted",
-                });
-            },
-            (err) => {
+
+        let formData = new FormData();
+        formData.append("title", title);
+        formData.append("body", body);
+        formData.append("tags", tags);
+        formData.append("key", key);
+        formData.append("preview", "false");
+        formData.append("site", "stackoverflow");
+        formData.append("access_token", accessToken);
+        formData.append("filter", "default");
+
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener("load", function (event) {
+            let data = JSON.parse(xhr.responseText);
+            console.log(data);
+            if (xhr.status == 400) {
                 tsvscode.postMessage({
                     type: "onError",
-                    value: "Question not posted",
+                    value: data.error_message,
                 });
-                console.log(err);
             }
-        );
+            if (xhr.status == 200) {
+                tsvscode.postMessage({
+                    type: "onInfo",
+                    value:
+                        "Your question has been posted successfully.\n Link: " +
+                        data.items[0].link,
+                });
+                title = "";
+                body = "";
+                tags = "";
+            }
+        });
+        xhr.open("POST", "https://api.stackexchange.com/2.3/questions/add");
+        xhr.send(formData);
     }
 
     onMount(() => {
@@ -100,3 +108,12 @@
 <input id="tags" placeholder="e.g. (spring django laravel)" bind:value={tags} />
 
 <button on:click={postQuestion}>post question</button>
+
+<p style="font-weight: 300;">
+    <img
+        alt="svgImg"
+        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iMTYiIGhlaWdodD0iMTYiCnZpZXdCb3g9IjAgMCAyNCAyNCIKc3R5bGU9IiBmaWxsOiNmZmZmZmY7Ij4gICAgPHBhdGggZD0iTTEyLDJDNi40NzcsMiwyLDYuNDc3LDIsMTJzNC40NzcsMTAsMTAsMTBzMTAtNC40NzcsMTAtMTBTMTcuNTIzLDIsMTIsMnogTTEyLDE3TDEyLDE3Yy0wLjU1MiwwLTEtMC40NDgtMS0xdi00IGMwLTAuNTUyLDAuNDQ4LTEsMS0xaDBjMC41NTIsMCwxLDAuNDQ4LDEsMXY0QzEzLDE2LjU1MiwxMi41NTIsMTcsMTIsMTd6IE0xMi41LDloLTFDMTEuMjI0LDksMTEsOC43NzYsMTEsOC41di0xIEMxMSw3LjIyNCwxMS4yMjQsNywxMS41LDdoMUMxMi43NzYsNywxMyw3LjIyNCwxMyw3LjV2MUMxMyw4Ljc3NiwxMi43NzYsOSwxMi41LDl6Ij48L3BhdGg+PC9zdmc+"
+    />
+    You can use the <b>Insert code from current selection</b> command to append your
+    code to the body of the question
+</p>

@@ -29,6 +29,7 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
         const app = polka();
 
         app.get("/auth/:token", (req, res) => {
+            app.server?.close();
             const token = req.params.token;
             if (!token) {
                 res.end("auth fail");
@@ -36,23 +37,23 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
             }
             this._view?.webview.postMessage({ type: "token", value: token });
             TokenManager.setToken(token);
+            console.log("Token: " + token);
             res.end("auth success, you can close this window now");
-            app.server?.close();
 
         });
 
         webviewView.webview.onDidReceiveMessage(async (data) => {
             switch (data.type) {
                 case "onAuth": {
-                    // const cachedToken = TokenManager.getToken();
-                    // if (cachedToken) {
-                    //     this._view?.webview.postMessage({ type: "token", value: cachedToken });
-                    // } else {
-                    app.listen(56789, () => {
-                        console.log("running polka on localhost:56789");
-                        vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(apiBaseUrl + "/auth"));
-                    });
-                    // }
+                    const cachedToken = TokenManager.getToken();
+                    if (cachedToken) {
+                        this._view?.webview.postMessage({ type: "token", value: cachedToken });
+                    } else {
+                        app.listen(56789, () => {
+                            console.log("running polka on localhost:56789");
+                            vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(apiBaseUrl + "/auth"));
+                        });
+                    }
 
                     break;
                 }
