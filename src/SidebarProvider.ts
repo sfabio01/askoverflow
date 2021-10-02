@@ -1,3 +1,4 @@
+import { join } from "path";
 import polka = require("polka");
 import * as vscode from "vscode";
 import { TokenManager } from './TokenManager';
@@ -16,7 +17,6 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 
     public resolveWebviewView(webviewView: vscode.WebviewView) {
         this._view = webviewView;
-
         webviewView.webview.options = {
             // Allow scripts in the webview
             enableScripts: true,
@@ -83,17 +83,19 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
     }
 
     private _getHtmlForWebview(webview: vscode.Webview) {
+        console.log(this._extensionUri.path);
         const styleResetUri = webview.asWebviewUri(
-            vscode.Uri.joinPath(this._extensionUri, "media", "reset.css")
+            vscode.Uri.file(join(this._extensionUri.path, "media", "reset.css"))
         );
         const styleVSCodeUri = webview.asWebviewUri(
-            vscode.Uri.joinPath(this._extensionUri, "media", "vscode.css")
+            vscode.Uri.file(join(this._extensionUri.path, "media", "vscode.css"))
         );
+
         const scriptUri = webview.asWebviewUri(
-            vscode.Uri.joinPath(this._extensionUri, "out", "compiled/sidebar.js")
+            vscode.Uri.file(join(this._extensionUri.path, "out", "compiled/sidebar.js"))
         );
         const styleMainUri = webview.asWebviewUri(
-            vscode.Uri.joinPath(this._extensionUri, "out", "compiled/sidebar.css")
+            vscode.Uri.file(join(this._extensionUri.path, "out", "compiled/sidebar.css"))
         );
 
         // Use a nonce to only allow a specific script to be run.
