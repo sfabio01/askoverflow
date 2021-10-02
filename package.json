@@ -1,8 +1,13 @@
 {
-	"name": "asktostackoverflow",
+	"name": "askoverflow",
 	"displayName": "AskOverflow",
 	"description": "Ask questions to Stackoverflow directly from inside VS Code",
-	"version": "0.0.1",
+	"version": "0.1.0",
+	"publisher": "fabio-sabbion",
+	"author": {
+		"name": "Fabio Sabbion"
+	},
+	"icon": "media/askoverflow_icon.png",
 	"engines": {
 		"vscode": "^1.60.0"
 	},
@@ -11,43 +16,43 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/sfabio01/asktostackoverflow-vscode-extension.git"
+		"url": "https://github.com/sfabio01/askoverflow"
 	},
 	"activationEvents": [
-		"onCommand:asktostackoverflow.refresh",
-		"onCommand:asktostackoverflow.insertCode",
-		"onView:asktostackoverflow-sidebar"
+		"onCommand:askoverflow.refresh",
+		"onCommand:askoverflow.insertCode",
+		"onView:askoverflow-sidebar"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"viewsContainers": {
 			"activitybar": [
 				{
-					"id": "asktostackoverflow-sidebar-view",
+					"id": "askoverflow-sidebar-view",
 					"title": "AskOverflow",
-					"icon": "media/icon.svg"
+					"icon": "media/sidebar_icon.svg"
 				}
 			]
 		},
 		"views": {
-			"asktostackoverflow-sidebar-view": [
+			"askoverflow-sidebar-view": [
 				{
 					"type": "webview",
-					"id": "asktostackoverflow-sidebar",
+					"id": "askoverflow-sidebar",
 					"name": "AskOverflow",
 					"icon": "media/icon.svg",
-					"contextualTitle": "AskToStackoverflow"
+					"contextualTitle": "AskOverflow"
 				}
 			]
 		},
 		"commands": [
 			{
-				"command": "asktostackoverflow.refresh",
+				"command": "askoverflow.refresh",
 				"category": "AskOverflow",
 				"title": "Refresh Webview"
 			},
 			{
-				"command": "asktostackoverflow.insertCode",
+				"command": "askoverflow.insertCode",
 				"category": "AskOverflow",
 				"title": "Insert code from current selection"
 			}
@@ -57,7 +62,7 @@
 		"vscode:prepublish": "npm run package",
 		"compile": "webpack",
 		"watch": "concurrently \"rollup -c -w\" \"webpack --mode development --watch\"",
-		"package": "webpack --mode production --devtool hidden-source-map",
+		"package": "rollup -c && webpack --mode production --devtool hidden-source-map",
 		"test-compile": "tsc -p ./",
 		"test-watch": "tsc -watch -p ./",
 		"pretest": "npm run test-compile && npm run lint",
@@ -66,10 +71,10 @@
 	},
 	"dependencies": {
 		"node-fetch": "^3.0.0",
-		"polka": "^0.5.2",
-		"vscode": "*"
+		"polka": "^0.5.2"
 	},
 	"devDependencies": {
+		"vscode": "*",
 		"@rollup/plugin-commonjs": "^20.0.0",
 		"@rollup/plugin-node-resolve": "^13.0.4",
 		"@rollup/plugin-typescript": "^8.2.5",
@@ -98,8 +103,8 @@
 		"webpack-cli": "^4.7.0"
 	},
 	"bugs": {
-		"url": "https://github.com/sfabio01/asktostackoverflow-vscode-extension/issues",
+		"url": "https://github.com/sfabio01/askoverflow",
 		"email": "fabiosabbion.apps@gmail.com"
 	},
-	"homepage": "https://github.com/sfabio01/asktostackoverflow-vscode-extension/blob/main/README.md"
+	"homepage": "https://github.com/sfabio01/askoverflow/blob/main/README.md"
 }
