@@ -19,7 +19,6 @@
 		"url": "https://github.com/sfabio01/askoverflow"
 	},
 	"activationEvents": [
-		"onCommand:askoverflow.refresh",
 		"onCommand:askoverflow.insertCode",
 		"onView:askoverflow-sidebar"
 	],
@@ -46,11 +45,6 @@
 			]
 		},
 		"commands": [
-			{
-				"command": "askoverflow.refresh",
-				"category": "AskOverflow",
-				"title": "Refresh Webview"
-			},
 			{
 				"command": "askoverflow.insertCode",
 				"category": "AskOverflow",

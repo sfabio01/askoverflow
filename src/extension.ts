@@ -29,15 +29,12 @@ export function activate(context: vscode.ExtensionContext) {
 		sidebarProvider._view?.webview.postMessage({ type: "selectedCode", value: text });
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('askoverflow.refresh', async () => {
-		await vscode.commands.executeCommand("workbench.action.closeSidebar");
-		await vscode.commands.executeCommand("workbench.view.extension.askoverflow-sidebar-view");
-		setTimeout(() => { vscode.commands.executeCommand("workbench.action.webview.openDeveloperTools"); }, 100);
+	// context.subscriptions.push(vscode.commands.registerCommand('askoverflow.refresh', async () => {
+	// 	await vscode.commands.executeCommand("workbench.action.closeSidebar");
+	// 	await vscode.commands.executeCommand("workbench.view.extension.askoverflow-sidebar-view");
+	// 	setTimeout(() => { vscode.commands.executeCommand("workbench.action.webview.openDeveloperTools"); }, 100);
 
-	}));
-
-
-
+	// }));
 
 }
 
