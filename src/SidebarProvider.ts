@@ -4,8 +4,6 @@ import * as vscode from "vscode";
 import { TokenManager } from './TokenManager';
 
 const apiBaseUrl = "https://xeyuug.deta.dev";
-// const apiBaseUrl = "http://localhost";
-
 
 export class SidebarProvider implements vscode.WebviewViewProvider {
     _view?: vscode.WebviewView;
@@ -45,16 +43,18 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
         webviewView.webview.onDidReceiveMessage(async (data) => {
             switch (data.type) {
                 case "onAuth": {
-                    const cachedToken = TokenManager.getToken();
-                    if (cachedToken) {
-                        this._view?.webview.postMessage({ type: "token", value: cachedToken });
-                    } else {
-                        app.listen(56789, () => {
-                            console.log("running polka on localhost:56789");
-                            vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(apiBaseUrl + "/auth"));
-                        });
+                    // data.value is True for cached results, False otherwise
+                    if (data.value) {
+                        const cachedToken = TokenManager.getToken();
+                        if (cachedToken) {
+                            this._view?.webview.postMessage({ type: "token", value: cachedToken });
+                            return;
+                        }
                     }
-
+                    app.listen(56789, () => {
+                        console.log("running polka on localhost:56789");
+                        vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(apiBaseUrl + "/auth"));
+                    });
                     break;
                 }
                 case "onInfo": {

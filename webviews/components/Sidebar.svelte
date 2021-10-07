@@ -49,6 +49,10 @@
                     type: "onError",
                     value: data.error_message,
                 });
+                if (data.error_id == 403) {
+                    // expired token
+                    tsvscode.postMessage({ type: "onAuth", value: false });
+                }
             }
             if (xhr.status == 200) {
                 tsvscode.postMessage({
@@ -81,7 +85,7 @@
             }
         });
 
-        tsvscode.postMessage({ type: "onAuth", value: "" });
+        tsvscode.postMessage({ type: "onAuth", value: true });
     });
 </script>
 
