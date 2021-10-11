@@ -144,7 +144,9 @@
     />
     <p style="font-weight: 300;">Press 'Enter' to search</p>
     {#if askedOnce}
-        <h2>{results.length} results found</h2>
+        <h2>
+            {results.length} result{#if results.length != 1}s{/if} found
+        </h2>
     {/if}
     {#each results as result}
         <h3>
@@ -153,7 +155,13 @@
                 >{/if}
         </h3>
         <a href={result.link}>{result.link}</a>
-        <br /> <br />
+        <p style="font-weight: 300; font-size:smaller;">
+            asked {new Date(result.creation_date * 1000).toLocaleDateString(
+                "en-US",
+                { year: "numeric", month: "short", day: "numeric" }
+            )}
+        </p>
+        <br />
     {/each}
 {:else if screen == Page.ask}
     <button on:click={navigateToHomePage}>back</button>
