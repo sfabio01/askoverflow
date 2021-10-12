@@ -6,6 +6,7 @@
         query,
         hasSearchedOnce,
     } from "./stores";
+    import { decode } from "he";
 
     function navigateToAskPage() {
         screen.set(PAGE.ask);
@@ -54,7 +55,7 @@
 {/if}
 {#each $searchResults as result}
     <h3>
-        {result.title}
+        {decode(result.title)}
         {#if result.is_answered}<span style="color: teal;">&#10004;</span>{/if}
     </h3>
     <a href={result.link}>{result.link}</a>
