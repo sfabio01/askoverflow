@@ -17,7 +17,7 @@
 
     async function postQuestion() {
         if ($accessToken == "") {
-            tsvscode.postMessage({ type: "onAuth", value: "" });
+            tsvscode.postMessage({ type: "onAuth", value: true });
             return;
         }
         if ($title.length < 15) {
@@ -50,17 +50,18 @@
             let data = JSON.parse(xhr.responseText);
             // console.log(data);
             if (xhr.status == 400) {
-                tsvscode.postMessage({
-                    type: "onError",
-                    value: data.error_message,
-                });
                 if (data.error_id == 403) {
                     // expired token
                     tsvscode.postMessage({
                         type: "onError",
-                        value: "The authentication token is expired, please sign in again",
+                        value: "The cached authentication token is expired, please sign in again",
                     });
                     tsvscode.postMessage({ type: "onAuth", value: false });
+                } else {
+                    tsvscode.postMessage({
+                        type: "onError",
+                        value: data.error_message,
+                    });
                 }
             }
             if (xhr.status == 200) {
