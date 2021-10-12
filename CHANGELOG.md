@@ -1,9 +1,13 @@
 # Change Log
 
-All notable changes to the "helloworld" extension will be documented in this file.
+## 1.0.1 (last)
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+- fixed text encoding
 
-## [Unreleased]
+## 1.0.0
 
-- Initial release
+- added search feature
+
+## 0.1.0
+
+- initial release
