@@ -2,7 +2,7 @@
 	"name": "askoverflow",
 	"displayName": "AskOverflow",
 	"description": "Ask and search questions on Stackoverflow directly from inside VS Code",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"publisher": "fabio-sabbion",
 	"author": {
 		"name": "Fabio Sabbion"
