@@ -64,5 +64,8 @@
     <p style="font-weight: 300; font-size:smaller;">
         {question.answer_count} answer{#if question.answer_count != 1}s{/if}
     </p>
+    <p style="font-weight: 300; font-size:smaller;">
+        Viewed {question.view_count} time{#if question.view_count != 1}s{/if}
+    </p>
     <br />
 {/each}
