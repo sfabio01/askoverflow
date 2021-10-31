@@ -71,6 +71,11 @@
                         "Your question has been posted successfully.\n Link: " +
                         data.items[0].link,
                 });
+                let questionId = data.items[0].question_id;
+                tsvscode.postMessage({
+                    type: "onNewQuestion",
+                    value: questionId,
+                });
                 title.set("");
                 body.set("");
                 tags.set("");
