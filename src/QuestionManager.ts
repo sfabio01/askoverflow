@@ -10,6 +10,9 @@ export class QuestionManager {
     static addQuestion(id: string) {
         let a = this.getQuestions();
         a.push(id);
+        if (a.length > 30) {
+            a.shift();
+        }
         this.globalState.update('questions', a);
     }
     static getQuestions(): string[] {
