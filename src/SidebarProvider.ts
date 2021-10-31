@@ -2,7 +2,7 @@ import { join } from "path";
 import polka = require("polka");
 import * as vscode from "vscode";
 import { TokenManager } from './TokenManager';
-
+import { QuestionManager } from './QuestionManager';
 const apiBaseUrl = "https://xeyuug.deta.dev";
 
 export class SidebarProvider implements vscode.WebviewViewProvider {
@@ -55,6 +55,16 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
                         console.log("running polka on localhost:56789");
                         vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(apiBaseUrl + "/auth"));
                     });
+                    break;
+                }
+                case "onNewQuestion": {
+                    let id = data.value;
+                    QuestionManager.addQuestion(id);
+                    break;
+                }
+                case "onGetQuestions": {
+                    let questionIds = QuestionManager.getQuestions();
+                    this._view?.webview.postMessage({ type: "questions", value: questionIds });
                     break;
                 }
                 case "onInfo": {
