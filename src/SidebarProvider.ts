@@ -28,9 +28,9 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 
         app.get("/auth/:token", (req, res) => {
             app.server?.close();
-            const token = req.params.token;
-            if (!token) {
-                res.end("auth fail");
+            let token = req.params.token;
+            if (!token || token === "0") {
+                res.end("auth failed");
                 return;
             }
             this._view?.webview.postMessage({ type: "token", value: token });

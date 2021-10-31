@@ -20,14 +20,18 @@ app.get("/redirect", (req, res) => {
         };
 
         request(options, (err, _, body) => {
-            let data = JSON.parse(body);
-            const token = data.access_token;
-            res.redirect("http://localhost:56789/auth/" + token);
+            if (err) {
+                res.redirect("http://localhost:56789/auth/0");
+            } else {
+                let data = JSON.parse(body);
+                const token = data.access_token;
+                res.redirect("http://localhost:56789/auth/" + token);
+            }
         });
 
 
     } else {
-        res.end("received code is empty");
+        res.redirect("http://localhost:56789/auth/0");
     }
 
 });
