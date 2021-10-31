@@ -3,6 +3,7 @@ import { writable } from 'svelte/store';
 export const PAGE = {
     home: "home",
     ask: "ask",
+    questions: "questions",
 };
 
 export const screen = writable(PAGE.home);

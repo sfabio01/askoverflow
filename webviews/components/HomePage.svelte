@@ -11,6 +11,9 @@
     function navigateToAskPage() {
         screen.set(PAGE.ask);
     }
+    function navigateToQuestionsPage() {
+        screen.set(PAGE.questions);
+    }
 
     async function onQueryChanged() {
         if ($query.length < 3) return;
@@ -40,6 +43,7 @@
 </script>
 
 <button on:click={navigateToAskPage}>Ask Question</button>
+<button on:click={navigateToQuestionsPage}>My Questions</button>
 <h1>Search on StackOverflow</h1>
 <input
     id="query"
