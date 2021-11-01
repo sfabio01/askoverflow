@@ -1,6 +1,11 @@
 # Change Log
 
-## 1.0.1 (last)
+## 1.1.0 (last)
+
+- added "My Questions" page
+- fixed bugs
+
+## 1.0.1
 
 - fixed text encoding
 
