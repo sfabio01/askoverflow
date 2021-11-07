@@ -13,30 +13,32 @@
         switch (message.type) {
             case "questions": {
                 let ids = message.value;
-                if (ids == []) return;
-                let url = new URL(
-                    "https://api.stackexchange.com/2.3/questions/" +
-                        ids.join(";")
-                );
-                url.searchParams.set("site", "stackoverflow");
+                if (ids.length == 0) {
+                    console.log("No questions");
+                } else {
+                    let url = new URL(
+                        "https://api.stackexchange.com/2.3/questions/" +
+                            ids.join(";")
+                    );
+                    url.searchParams.set("site", "stackoverflow");
+                    const xhr = new XMLHttpRequest();
+                    xhr.addEventListener("load", function (event) {
+                        let data = JSON.parse(xhr.responseText);
+                        if (xhr.status == 400) {
+                            tsvscode.postMessage({
+                                type: "onError",
+                                value: data.error_message,
+                            });
+                        }
+                        if (xhr.status == 200) {
+                            questions = data.items;
+                        }
+                    });
 
-                const xhr = new XMLHttpRequest();
-                xhr.addEventListener("load", function (event) {
-                    let data = JSON.parse(xhr.responseText);
-                    console.log(data);
-                    if (xhr.status == 400) {
-                        tsvscode.postMessage({
-                            type: "onError",
-                            value: data.error_message,
-                        });
-                    }
-                    if (xhr.status == 200) {
-                        questions = data.items;
-                    }
-                });
-
-                xhr.open("GET", url.toString());
-                xhr.send();
+                    xhr.open("GET", url.toString());
+                    xhr.send();
+                }
+                break;
             }
         }
     });
