@@ -8,3 +8,5 @@ declare global {
         get: (url: string, options: any, callback: (error: any, response: Response, body: any) => void) => void;
     };
 }
+
+declare module 'he';
